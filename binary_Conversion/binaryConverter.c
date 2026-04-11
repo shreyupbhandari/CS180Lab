@@ -3,10 +3,6 @@
 #include <math.h> // The math header file is included to use the pow() function.
 #include "binaryConverter.h"
 
-int *binaryConverter(int number);
-void binaryAllocation(int *binaryArray, int remainder);
-int divisionCounter(int number);
-void display(int *binaryArray);
 
 int divisionCounter(int number)//Counter function implemented to count the number of divisions on the number.
 {
