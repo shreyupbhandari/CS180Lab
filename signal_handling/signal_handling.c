@@ -4,7 +4,7 @@
 #include <time.h>
 #include <unistd.h>
 int seconds_remaining=300;
-int password;
+int password[3];
 
 void terminating_signal_handlers(int signal);
 void increase_timer_signal_handler(int signal);
@@ -18,8 +18,15 @@ int main()
     signal(SIGUSR1,increase_timer_signal_handler);
     signal(SIGUSR2,disarm_chance_signal_handler);
     srand(time(NULL)); //Seeding the random number according to the current time.
-    password=rand()%900+100; //Stores the password combination in an integer array allocated statically.
-    printf("%d",password);
+    for (int i=0 ; i<3 ; i++)
+    {
+        password[i]=rand()%10; //Stores the password combination in an integer array allocated statically.
+    }
+
+    for (int i=0 ; i<3 ; i++)
+    {
+        printf("%d",password[i]);
+    }
 
     while (seconds_remaining<=300)
     {
@@ -55,19 +62,38 @@ void disarm_chance_signal_handler(int signal)
 
 void disarm()
 {   
-    int entered_password;
-    printf("Enter a three digit combination to disarm the bomb:\n");
-    scanf("%d",&entered_password);
-    if(password==entered_password)
+    int entered_password[3],count=0;
+    int time_taken_to_enter_password;
+    time_t start= time(NULL);
+    for(int i=0; i<3 ;i++)
     {
-        printf("\nThe bomb has been disarmed successfully!.\n");
+        printf("\nEnter digit %d to the 3 digit combination to disarm the bomb:\n",i+1);
+        scanf("%d",&entered_password[i]);
+    }
+    time_t end= time(NULL);
+    double difference=difftime(end,start); //difftime() is the standard way to find the difference in time between two values in seconds.
+    seconds_remaining=seconds_remaining-difference;
+    printf("\nYou took %.2f seconds to type the password!, which has been deducted from the timer.\n",difference);
+    for (int i=0; i<3 ; i++)
+    {
+        if (password[i]==entered_password[i])
+        {
+         count++;   
+        }
+    }
+    if (count==3)
+    {
+        printf("\nThe bomb was disarmed successfully!\n");
         exit(1);
     }
     else
     {
+        if(count>=1)
+        {
+            printf("\n%d numbers match.\n",count);
+        }
         seconds_remaining=seconds_remaining-50;
         printf("\nPenalized 50 seconds for entering the wrong password!\n");
     }
-
 
 }
