@@ -18,8 +18,8 @@ int main()
     signal(SIGUSR1,increase_timer_signal_handler);
     signal(SIGUSR2,disarm_chance_signal_handler);
     srand(time(NULL)); //Seeding the random number according to the current time.
-    password=rand()%10; //Stores the password combination in an integer array allocated statically.
-   
+    password=rand()%900+100; //Stores the password combination in an integer array allocated statically.
+    printf("%d",password);
 
     while (seconds_remaining<=300)
     {
@@ -55,10 +55,10 @@ void disarm_chance_signal_handler(int signal)
 
 void disarm()
 {   
-    int entered_password[2];
+    int entered_password;
     printf("Enter a three digit combination to disarm the bomb:\n");
-    scanf("%d%d%d",&entered_password[0],&entered_password[1],&entered_password[2]);
-    if(password[0]==entered_password[0] && password[1]==entered_password[1] && password[2]==entered_password[2])
+    scanf("%d",&entered_password);
+    if(password==entered_password)
     {
         printf("\nThe bomb has been disarmed successfully!.\n");
         exit(1);
