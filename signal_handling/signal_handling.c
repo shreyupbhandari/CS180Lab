@@ -92,6 +92,10 @@ void disarm()
         {
             printf("\n%d numbers match.\n",count);
         }
+        else
+        {
+            printf("\nNone of the digits matched.\n");
+        }
         seconds_remaining=seconds_remaining-50;
         printf("\nPenalized 50 seconds for entering the wrong password!\n");
     }
