@@ -8,7 +8,7 @@ int main(int argc, char **argv)
 {
     char *name = "/memorysharing";
     const int SIZE = 16*sizeof(int);
-    int fd = shm_open(name, O_RDONLY, 0644); //Permission represented in octal notation.
+    int fd = shm_open(name, O_RDONLY, 0744); //Permission represented in octal notation.
     if (fd==-1)
     {
         fprintf(stderr,"shm_open failed!\n");

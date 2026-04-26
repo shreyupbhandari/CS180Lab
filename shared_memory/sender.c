@@ -8,7 +8,7 @@ int main(int argc, char **argv)
 {
     char *name = "/memorysharing";
     const int SIZE = 16*sizeof(int);
-    int fd = shm_open(name,O_CREAT,O_RDWR,S_IRUSR, 0666);
+    int fd = shm_open(name,O_CREAT|O_RDWR|S_IRUSR, 0766);
     if (fd==-1)
     {
         fprintf(stderr,"shm_open failed!\n");
