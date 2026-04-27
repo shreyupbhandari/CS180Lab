@@ -4,7 +4,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <string.h>
-#define RESPONSE_BUFFER_SIZE 4096
+#define RESPONSE_BUFFER_SIZE 8192
 
 int create_IPv4_socket();
 struct sockaddr_in * create_IPv4_address(char ip[], int port);
@@ -26,7 +26,7 @@ int main()
 	}
 
 	char *message;
-	message="GET/ HTTP/1.1\r\nHost: www.google.com\r\n\r\n";
+	message="GET / HTTP/1.1\r\nHost: www.google.com\r\n\r\n";
 
 	ssize_t message_size=send(socket_fd,message,strlen(message),0);
 	printf("Sent %ldb request.\n",message_size);
@@ -37,6 +37,7 @@ int main()
 	ssize_t response_size= recv(socket_fd, buffer, RESPONSE_BUFFER_SIZE, 0);
 	printf("Received  %ldb response.\n%s\n",response_size,buffer);
 
+	free(address);
 	return 0;
 }
 
