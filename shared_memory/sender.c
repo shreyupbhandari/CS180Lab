@@ -8,10 +8,11 @@ int main(int argc, char **argv)
 {
     char *name = "/memorysharing";
     const int SIZE = 16*sizeof(int);
-    int fd = shm_open(name,O_CREAT|O_RDWR|S_IRUSR, 0766);
+    int fd = shm_open(name,O_CREAT|O_RDWR, S_IRUSR|S_IWUSR|S_IXUSR);
     if (fd==-1)
     {
         fprintf(stderr,"shm_open failed!\n");
+        perror(NULL);
         exit(1);
     }
     ftruncate(fd,SIZE);
@@ -24,7 +25,7 @@ int main(int argc, char **argv)
     for (int i=0 ; i<16 ; i++)
     {
         shared_array[i]=i*i;
-        printf("shared_array[%d]=%d",i,shared_array[i]);
+        printf("shared_array[%d]=%d\n",i,shared_array[i]);
     }
     if (munmap(shared_array,SIZE)==-1)
     {

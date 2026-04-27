@@ -10,6 +10,7 @@ int main(int argc, char **argv)
     printf("Hi! Welcome to ShreyShell!\n");
     char *command=NULL;
     char **argument=NULL;
+    int *status;
     if (NULL==(command=(char *)malloc(sizeof(char)*100)))
     {
         fprintf(stderr,"Malloc to the commmad failed!\n");
@@ -39,7 +40,7 @@ int main(int argc, char **argv)
             {
                 free(argument[k]);
             }
-            break;
+             break;
         }
         if (fork()==0)
         {
@@ -50,8 +51,8 @@ int main(int argc, char **argv)
         }
         else
         {
-            wait(NULL);
-            printf("Executed %s command successfully!\n",argument[0]);
+            wait(status);
+            printf("Executed %s command successfully with status code %d!\n",argument[0],WIFEXITED(status));
         }
         free(commandCopy);
         for (int k=0; k<argumentSize; k++)

@@ -22,7 +22,7 @@ int main(int argc, char **argv)
     }
     for (int i=0 ; i<16 ; i++)
     {
-        printf("shared_array[%d]=%d",i,shared_array[i]);
+        printf("shared_array[%d]=%d\n",i,shared_array[i]);
     }
     if (munmap(shared_array,SIZE)==-1)
     {
