@@ -14,7 +14,7 @@ long global_out_circle = 0;
 void* throw_darts(void* arg) {
 
     long thread_id = (long)arg;
-    unsigned int my_seed = thread_id + 1; //Unique seed assigned to each thread.
+    unsigned int my_seed = thread_id + 1; //Unique seed per thread so break the psuedo random number generator :P.
     
     for (long i = 0; i < DARTS_PER_THREAD; i++) 
     {
