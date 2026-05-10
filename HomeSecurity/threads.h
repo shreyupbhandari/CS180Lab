@@ -8,4 +8,4 @@ void *thread_reed(void *arg);
 void *thread_buzzer(void *arg);
 void *thread_button(void *arg);
 
-#endif /* THREADS_H */
+#endif 
