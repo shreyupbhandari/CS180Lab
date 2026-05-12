@@ -1,7 +1,7 @@
 #ifndef PROJECT_H
 #define PROJECT_H
 
-#include <pthread.h>
+#include <pthread.h> //To initialize a mutex.
 
 //System State machine with the keyword enum, treats the states as integers.
 typedef enum

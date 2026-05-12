@@ -2,8 +2,8 @@
 #define LED_H
 
 #define uchar unsigned char
-#define LedPinRed    2
-#define LedPinGreen  3
+#define LedPinRed    2 //GPIO for Red in Dual LED component
+#define LedPinGreen  3 //GPIO for Green in Dual LED component
 
 void led_setup(void);
 

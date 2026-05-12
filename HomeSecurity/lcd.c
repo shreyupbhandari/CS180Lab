@@ -4,6 +4,7 @@
 #include <string.h>
 #include "lcd.h"
 
+ //Sunfounder example 
 int LCDAddr = 0x27;
 int BLEN = 1;
 int fd;
@@ -68,6 +69,7 @@ void init(){
 	wiringPiI2CWrite(fd, 0x08);
 }
 
+//Setup wrapper
 int lcd_setup()
 {
 	fd = wiringPiI2CSetup(LCDAddr);
@@ -78,6 +80,7 @@ int lcd_setup()
 	init();
 }
 
+//Created a write function by referencing Sunfounder.
 void lcd_write(int x, int y, char data[]){
 	int addr, i;
 	int tmp;

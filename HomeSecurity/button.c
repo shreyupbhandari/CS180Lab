@@ -2,13 +2,13 @@
 #include <wiringPi.h>
 #include "button.h"
 
-void button_setup()
+void button_setup() //Setup wrapper
 {
 	pinMode(BtnPin, INPUT);
 }
 	
 
-int button_is_pressed()
+int button_is_pressed() //If both conditions are low then the button is pressed, very similar to SunFounder example.
 {
     if(0 == digitalRead(BtnPin))
     {

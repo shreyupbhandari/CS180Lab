@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include "led.h"
 
+
+//Most of the functions here are wrapper as well. Although LED was not needed, I thought it would add a great touch to the project.
 void ledInit(void)
 {
 	softPwmCreate(LedPinRed,  0, 100);

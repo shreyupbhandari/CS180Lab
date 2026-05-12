@@ -14,23 +14,26 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
+
 volatile SystemState g_state = STATE_DISARMED;
+//The silence variable keeps track of whether the IR is triggered while the system is triggered.
 volatile int g_alarm_silence = 0;
 pthread_mutex_t g_lock;
 
 void take_picture()
 {
     printf("(CAM) Capturing image.");
+    //The regular old trustful fork().
     int pid = fork();
     if (pid==0)
     {
-        char *args[]={"rpicam-still","-o","/home/piisnotinfinite/recent.jpg",NULL};
+        char *args[]={"rpicam-still","-o","/home/piisnotinfinite/recent.jpg",NULL}; //Exec does not recognise shell commands, so need to provide absolute path.
         execvp(args[0],args);
         perror("(CAM) Exec failed!");
     }
     else
     {
-        wait(NULL);
+        wait(NULL); //Wait for the child to REAPPP it.
         printf("Camera image saved!\n");
     }
 }
@@ -49,6 +52,7 @@ int main()
         return 1;
     }
 
+    //Setting the components up.
     led_setup();
     led_off();
 
@@ -71,6 +75,7 @@ int main()
     button_setup();
     ir_setup();
 
+    //Initializing our workers uhhh sorry threads.
     pthread_t t_lcd, t_ir, t_reed, t_buzzer, t_button;
 
     //Could have created a helper function to make the error handling a little less redundant but the args would be too complicated.
@@ -113,6 +118,7 @@ int main()
     printf("(MAIN) Press any button on the remote to ARM the system.\n");
     printf("(MAIN) Press Ctrl-C to shut down.\n\n");
 
+    //Wait for all the threads.
     pthread_join(t_lcd,   NULL);
     pthread_join(t_ir,    NULL);
     pthread_join(t_reed,  NULL);

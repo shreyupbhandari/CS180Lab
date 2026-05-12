@@ -1,7 +1,7 @@
 #ifndef BUZZER_H
 #define BUZZER_H
 
-#define BuzPin 5
+#define BuzPin 5 //GPIO for buzzer.
 
 #define  CL1  131
 #define  CL2  147
