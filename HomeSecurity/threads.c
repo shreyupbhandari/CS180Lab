@@ -137,24 +137,19 @@ void *thread_buzzer(void *arg)
         int         sil = g_alarm_silence;
         pthread_mutex_unlock(&g_lock);
 
-        if (s == STATE_TRIGGERED && !sil) {
-            was_triggered = 1;
-
+        if (s == STATE_TRIGGERED) 
+        {
+            pthread_mutex_lock(&g_lock);
+            g_alarm_silence=0;
+            pthread_mutex_unlock(&g_lock);
             led_red();
             buzzer_alarm(); 
             led_off();
             delay(200);
-        } else {
-            if (was_triggered) 
-            {
-                led_off();
-                buzzer_off();
-                was_triggered = 0;
-
-                pthread_mutex_lock(&g_lock);
-                g_alarm_silence = 0;
-                pthread_mutex_unlock(&g_lock);
-            }
+        } 
+        else 
+        {
+            buzzer_off();
             delay(100);
         }
     }
