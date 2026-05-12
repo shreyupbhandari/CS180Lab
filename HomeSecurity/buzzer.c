@@ -55,6 +55,5 @@ void buzzer_alarm()
 
 void buzzer_off()
 {   
-    
-    softToneStop(BuzPin);
+    softToneWrite(BuzPin,0);
 }

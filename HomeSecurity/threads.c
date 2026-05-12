@@ -134,14 +134,10 @@ void *thread_buzzer(void *arg)
     while (1) {
         pthread_mutex_lock(&g_lock);
         SystemState s   = g_state;
-        int         sil = g_alarm_silence;
         pthread_mutex_unlock(&g_lock);
 
         if (s == STATE_TRIGGERED) 
         {
-            pthread_mutex_lock(&g_lock);
-            g_alarm_silence=0;
-            pthread_mutex_unlock(&g_lock);
             led_red();
             buzzer_alarm(); 
             led_off();
