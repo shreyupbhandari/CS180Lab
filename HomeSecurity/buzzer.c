@@ -2,6 +2,7 @@
 #include <softTone.h>
 #include <stdio.h>
 #include "buzzer.h"
+#include "project.h"
 
 
 int song_1[] = {CM3,CM5,CM6,CM3,CM2,CM3,CM5,CM6,CH1,CM6,CM5,CM1,CM3,CM2,
@@ -20,29 +21,40 @@ int beat_2[] = {1,1,1,3,1,1,1,3,1,1,1,1,1,1,3,1,1,1,2,1,1,1,3,1,1,1,3,3,2,3};
 int buzzer_setup()
 {
 	if(softToneCreate(BuzPin) == -1){
-		fprintf(stderr, "[BUZ]setup softToneCreate failed!");
+		fprintf(stderr, "(BUZ) setup softToneCreate failed!");
 		return -1; 
 	}
     return 0;
 }
 void buzzer_alarm()
 {
-    int i, j;
+    int i;
 	
     for(i=0;i<sizeof(song_1)/4;i++)
     {
+        if (g_alarm_silence)
+        {
+            softToneWrite(BuzPin,0);
+            return;
+        }
         softToneWrite(BuzPin, song_1[i]);	
         delay(beat_1[i] * 500);
     }
 
     for(i=0;i<sizeof(song_2)/4;i++)
     {
+        if (g_alarm_silence)
+        {
+            softToneWrite(BuzPin,0);
+            return 0;
+        }
         softToneWrite(BuzPin, song_2[i]);	
         delay(beat_2[i] * 500);
     }	
 }
 
 void buzzer_off()
-{
-    softToneWrite(BuzPin, 0);
+{   
+    
+    softToneStop(BuzPin, 0);
 }
