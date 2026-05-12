@@ -46,7 +46,7 @@ void buzzer_alarm()
         if (g_alarm_silence)
         {
             softToneWrite(BuzPin,0);
-            return 0;
+            return;
         }
         softToneWrite(BuzPin, song_2[i]);	
         delay(beat_2[i] * 500);
@@ -56,5 +56,5 @@ void buzzer_alarm()
 void buzzer_off()
 {   
     
-    softToneStop(BuzPin, 0);
+    softToneStop(BuzPin);
 }
